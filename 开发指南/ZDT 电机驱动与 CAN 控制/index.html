@@ -12,7 +12,7 @@
         <link rel="prev" href="../%E5%89%8D%E8%A8%80/">
       
       
-        <link rel="next" href="../HWT101%20%E9%99%80%E8%9E%BA%E4%BB%AA%E4%BD%BF%E7%94%A8/">
+        <link rel="next" href="../%E5%BA%95%E7%9B%98%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%AD%A3%E9%80%86%E8%A7%A3%E7%AE%97/">
       
       
       <link rel="icon" href="../../assets/logo.png">
@@ -852,12 +852,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../HWT101%20%E9%99%80%E8%9E%BA%E4%BB%AA%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+      <a href="../%E5%BA%95%E7%9B%98%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%AD%A3%E9%80%86%E8%A7%A3%E7%AE%97/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    HWT101 陀螺仪使用
+    底盘运动学正逆解算
     
   </span>
   
@@ -875,12 +875,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%BA%95%E7%9B%98%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%AD%A3%E9%80%86%E8%A7%A3%E7%AE%97/" class="md-nav__link">
+      <a href="../HWT101%20%E9%99%80%E8%9E%BA%E4%BB%AA%E4%BD%BF%E7%94%A8/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    底盘运动学正逆解算
+    HWT101 陀螺仪使用
     
   </span>
   
@@ -1137,13 +1137,19 @@
 <p>如果启用多机同步，必须在所有电机命令发送完毕后，发送多机同步命令，否则电机不会运动。</p>
 <p>绝对位置是以电机上电时的位置或使用命令清零后的位置为零点的，所以电机的运动方向需要在电机上设置，命令的正反转将失效。</p>
 <p>相对位置的零点是以电机当前的位置为零点。</p>
-<p>不要使用电机的位置模式来控制电机底盘，因为电机内部的 PID 会使得四个电机运动不一致而导致底盘跑偏。</p>
+<p>不要使用电机的位置模式来控制底盘，因为电机内部的 PID 会使得四个电机运动不一致而导致底盘跑偏。</p>
 <h2 id="can">电机的 CAN 控制代码<a class="headerlink" href="#can" title="Permanent link">&para;</a></h2>
 <p>在张大头 QQ 群里的 F4 例程有 HAL 库版本的例程，但是在例程中没有提供接收消息的代码，所以我这里补充一下。</p>
-<p><a href="../%E4%BB%A3%E7%A0%81/Emm_V5.c">Emm_V5.c</a>
-<a href="../%E4%BB%A3%E7%A0%81/Emm_V5.h">Emm_V5.h</a></p>
-<p><code>SUCCESSRECEIVE</code>和<code>FAILRECEIVE</code>是在main.h中定义的宏</p>
-<p>打开CAN接收中断</p>
+<ul>
+<li>
+<p><a download="Emm_V5.c" href="../%E4%BB%A3%E7%A0%81/Emm_V5.c">Emm_V5.c</a></p>
+</li>
+<li>
+<p><a download="Emm_V5.h" href="../%E4%BB%A3%E7%A0%81/Emm_V5.h">Emm_V5.h</a></p>
+</li>
+</ul>
+<p><code>SUCCESSRECEIVE</code> 和 <code>FAILRECEIVE</code> 是在 <code>main.h</code> 中定义的宏</p>
+<p>使用前需要打开CAN接收中断</p>
 <p><img alt="中断.png" src="../%E5%9B%BE%E7%89%87/%E4%B8%AD%E6%96%AD.png" /></p>
 <p>CAN 接收回调函数在接收到消息后会调用 <code>Emm_V5_Pos_Status_ReadCalback</code> 函数，数据存储在 <code>Emm_V5_Pos_Status</code> 结构体中</p>
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
