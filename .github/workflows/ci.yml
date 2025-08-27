@@ -67,6 +67,8 @@ jobs:
             docs
             includes
             .ai_cache
+            overrides
+            mkdocs.yml
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
