@@ -22,18 +22,19 @@ comments: true
 
 相对位置的零点是以电机当前的位置为零点。
 
-不要使用电机的位置模式来控制电机底盘，因为电机内部的 PID 会使得四个电机运动不一致而导致底盘跑偏。
+不要使用电机的位置模式来控制底盘，因为电机内部的 PID 会使得四个电机运动不一致而导致底盘跑偏。
 
 ## 电机的 CAN 控制代码
 
 在张大头 QQ 群里的 F4 例程有 HAL 库版本的例程，但是在例程中没有提供接收消息的代码，所以我这里补充一下。
 
-[Emm_V5.c](%E4%BB%A3%E7%A0%81/Emm_V5.c)
-[Emm_V5.h](%E4%BB%A3%E7%A0%81/Emm_V5.h)
+- [Emm_V5.c](%E4%BB%A3%E7%A0%81/Emm_V5.c){:download="Emm_V5.c"}
 
-`SUCCESSRECEIVE`和`FAILRECEIVE`是在main.h中定义的宏
+- [Emm_V5.h](%E4%BB%A3%E7%A0%81/Emm_V5.h){:download="Emm_V5.h"}
 
-打开CAN接收中断
+`SUCCESSRECEIVE` 和 `FAILRECEIVE` 是在 `main.h` 中定义的宏
+
+使用前需要打开CAN接收中断
 
 ![中断.png](%E5%9B%BE%E7%89%87/%E4%B8%AD%E6%96%AD.png)
 
