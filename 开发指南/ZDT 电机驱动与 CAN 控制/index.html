@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -766,6 +771,19 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    ZDT 电机驱动与 CAN 控制
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -777,6 +795,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      写在前面
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一些容易踩坑的点
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#can" class="md-nav__link">
+    <span class="md-ellipsis">
+      电机的 CAN 控制代码
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1011,6 +1073,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      写在前面
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一些容易踩坑的点
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#can" class="md-nav__link">
+    <span class="md-ellipsis">
+      电机的 CAN 控制代码
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1030,9 +1127,82 @@
 
   <h1>ZDT 电机驱动与 CAN 控制</h1>
 
-<p>待更新</p>
-
-
+<h2 id="_1">写在前面<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>工作室电机请一定要先恢复出厂设置。如果使用串口，请检查跳线帽是否安装正确，因为有一部分是我切换为 CAN 模式的。</p>
+<p>张大头固件 V5.1.5 版本串口通讯有严重 Bug，如果工作室的电机版本为 V5.1.5，请务必升级到 V5.1.6 或更高版本。</p>
+<p>升级教程以及更多资料请加入张大头 QQ 群 761548421</p>
+<h2 id="_2">一些容易踩坑的点<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>电机通讯 CAN 和串口必须等待电机发出的应答后才能发送下一条指令或者等待响应命令，否则会出现电机不响应的情况。</p>
+<p>在位置模式下，必须等待电机到位后才能发送下一条位置命令，否则会出现打断电机执行当前命令。</p>
+<p>如果启用多机同步，必须在所有电机命令发送完毕后，发送多机同步命令，否则电机不会运动。</p>
+<p>绝对位置是以电机上电时的位置或使用命令清零后的位置为零点的，所以电机的运动方向需要在电机上设置，命令的正反转将失效。</p>
+<p>相对位置的零点是以电机当前的位置为零点。</p>
+<p>不要使用电机的位置模式来控制电机底盘，因为电机内部的 PID 会使得四个电机运动不一致而导致底盘跑偏。</p>
+<h2 id="can">电机的 CAN 控制代码<a class="headerlink" href="#can" title="Permanent link">&para;</a></h2>
+<p>在张大头 QQ 群里的 F4 例程有 HAL 库版本的例程，但是在例程中没有提供接收消息的代码，所以我这里补充一下。</p>
+<p><a href="../%E4%BB%A3%E7%A0%81/Emm_V5.c">Emm_V5.c</a>
+<a href="../%E4%BB%A3%E7%A0%81/Emm_V5.h">Emm_V5.h</a></p>
+<p><code>SUCCESSRECEIVE</code>和<code>FAILRECEIVE</code>是在main.h中定义的宏</p>
+<p>打开CAN接收中断</p>
+<p><img alt="中断.png" src="../%E5%9B%BE%E7%89%87/%E4%B8%AD%E6%96%AD.png" /></p>
+<p>CAN 接收回调函数在接收到消息后会调用 <code>Emm_V5_Pos_Status_ReadCalback</code> 函数，数据存储在 <code>Emm_V5_Pos_Status</code> 结构体中</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1">// CAN 接收回调函数</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">HAL_CAN_RxFifo0MsgPendingCallback</span><span class="p">(</span><span class="n">CAN_HandleTypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">CanHandle</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="cm">/* Get RX message */</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">HAL_CAN_GetRxMessage</span><span class="p">(</span><span class="n">CanHandle</span><span class="p">,</span><span class="w"> </span><span class="n">CAN_RX_FIFO0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">RxHeader</span><span class="p">,</span><span class="w"> </span><span class="n">CANRxBuff</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">HAL_OK</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="cm">/* Reception Error */</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="n">Error_Handler</span><span class="p">();</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">  </span><span class="n">Emm_V5_Pos_Status_ReadCalback</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Emm_V5_Pos_Status</span><span class="p">,</span><span class="n">CANRxBuff</span><span class="p">);</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="w">    </span><span class="n">can</span><span class="p">.</span><span class="n">rxFrameFlag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p><code>can.rxFrameFlag</code> 为判断是否接收到消息的标志位。</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1">//可以直接放在 can_SendCmd 函数里面</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="k">while</span><span class="p">(</span><span class="n">can</span><span class="p">.</span><span class="n">rxFrameFlag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"> </span><span class="n">can</span><span class="p">.</span><span class="n">rxFrameFlag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="c1">//在每次发送命令后等待接收消息</span>
+</code></pre></div></td></tr></table></div>
+<p><code>CAN.h</code> 中的CAN 结构体</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="n">__IO</span><span class="w"> </span><span class="n">CAN_RxHeaderTypeDef</span><span class="w"> </span><span class="n">CAN_RxMsg</span><span class="p">;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span><span class="n">__IO</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">rxData</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">  </span><span class="n">__IO</span><span class="w"> </span><span class="n">CAN_TxHeaderTypeDef</span><span class="w"> </span><span class="n">CAN_TxMsg</span><span class="p">;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">  </span><span class="n">__IO</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">txData</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">  </span><span class="n">__IO</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">rxFrameFlag</span><span class="p">;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="p">}</span><span class="n">CAN_t</span><span class="p">;</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="k">extern</span><span class="w"> </span><span class="n">__IO</span><span class="w"> </span><span class="n">CAN_t</span><span class="w"> </span><span class="n">can</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<hr />
 
 
 
@@ -1041,9 +1211,66 @@
 
 
   
+  
 
 
 
+  
+
+
+
+
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js"
+        data-repo="qiaolook/Wiki"
+        data-repo-id="R_kgDOPk8_Sw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOPk8_S84Cupf4"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="0"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme)
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
 
                 
               </article>
