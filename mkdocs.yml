@@ -40,6 +40,10 @@ theme:
   custom_dir: overrides
 
   palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/lightbulb-outline
+        name: 关闭自动模式
     - media: "(prefers-color-scheme: light)"
       scheme: default
       primary: white
@@ -51,7 +55,7 @@ theme:
       primary: black
       toggle:
         icon: material/lightbulb-outline
-        name: 切换浅色模式
+        name: 切换自动模式
 
   name: material
   language: zh
