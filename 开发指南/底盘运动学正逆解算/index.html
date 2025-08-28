@@ -844,7 +844,76 @@
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      底盘运动学正逆解
+      底盘运动学正逆解算
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="底盘运动学正逆解算">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      运动学正逆解的本质
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      旋转矩阵的作用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      旋转矩阵的原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      代码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      一些未经实验的东西
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      关于位置、角度闭环
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      完整代码
     </span>
   </a>
   
@@ -1082,7 +1151,76 @@
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      底盘运动学正逆解
+      底盘运动学正逆解算
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="底盘运动学正逆解算">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      运动学正逆解的本质
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      旋转矩阵的作用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      旋转矩阵的原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      代码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      一些未经实验的东西
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      关于位置、角度闭环
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      完整代码
     </span>
   </a>
   
@@ -1120,12 +1258,283 @@
     frameborder="no" 
     framespacing="0" 
     allowfullscreen="true" 
-    width="650" 
-    height="400">
+    width="640" 
+    height="360">
 </iframe>
 
-<h2 id="_2">底盘运动学正逆解<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p><strong><em>待更新</em></strong></p>
+<h2 id="_2">底盘运动学正逆解算<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>关于麦克纳姆轮的运动学正逆解算可以参考：</p>
+<ul>
+<li><a href="https://blog.csdn.net/oXiaoLingTong/article/details/120198677">麦克纳姆轮运动学解算</a></li>
+</ul>
+<blockquote>
+<p>但是如果想要变旋转边运动我们还需要引入旋转角度 <span class="arithmatex">\(\theta\)</span> 影响</p>
+</blockquote>
+<h3 id="_3">运动学正逆解的本质<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>先回顾一下：</p>
+<ul>
+<li>
+<p><strong>正解（Forward Kinematics）</strong>：已知轮子转速 → 算小车的速度或位置变化。</p>
+</li>
+<li>
+<p><strong>逆解（Inverse Kinematics）</strong>：已知小车想要的速度或位移 → 算每个轮子应该转多少。</p>
+</li>
+</ul>
+<p>在这里，小车既能 <strong>前后移动</strong>，又能 <strong>左右移动</strong>，还可能 <strong>原地旋转</strong>。
+所以我们有两套坐标系：</p>
+<ol>
+<li>
+<p><strong>车体坐标系（局部坐标系）</strong></p>
+</li>
+<li>
+<p>原点在车中心。</p>
+</li>
+<li>x 轴指前方，y 轴指左方。</li>
+<li>
+<p>小车内部的控制、速度、轮子运动都在这个坐标系里计算。</p>
+</li>
+<li>
+<p><strong>全局坐标系（绝对坐标系）</strong></p>
+</li>
+<li>
+<p>地图坐标，固定不动。</p>
+</li>
+<li>小车在地图上的实际位置和方向。</li>
+</ol>
+<h3 id="_4">旋转矩阵的作用<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>假设小车 <strong>车头朝东（x轴）</strong>，它想向前走 1 米，在局部坐标系里就是 <span class="arithmatex">\((1, 0)\)</span>。</p>
+<ul>
+<li>如果地图上北是 y 轴正方向、东是 x 轴正方向，车头朝东 → 不需要旋转。</li>
+<li>如果车头朝北（局部 x 轴指北） → “局部前进 1 米”在全局坐标里是 <span class="arithmatex">\((0, 1)\)</span>。</li>
+</ul>
+<p>也就是说：<strong>局部坐标系里的前方，在全局坐标系里不一定是同一个方向</strong>。</p>
+<p><strong>旋转矩阵</strong>就是用来把 <strong>局部坐标（车体坐标系）</strong> 转换到 <strong>全局坐标系</strong> 的工具，这样我们就可以使得运动过程中的旋转不会影响到我们走直线。</p>
+<h3 id="_5">旋转矩阵的原理<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>二维旋转矩阵：</p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+x_\text{global} \\
+y_\text{global}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\cos\theta &amp; -\sin\theta \\
+\sin\theta &amp; \cos\theta
+\end{bmatrix}
+\begin{bmatrix}
+x_\text{local} \\
+y_\text{local}
+\end{bmatrix}
+\]</div>
+<p>假设：</p>
+<ul>
+<li>小车朝向 θ = 45°（前方指向东北）</li>
+<li>想在全局坐标系里 <strong>正东 + 正北方向同时移动</strong>，速度分别为 <code>Vx_global = 1, Vy_global = 1</code></li>
+</ul>
+<p><strong>逆解步骤</strong>：</p>
+<ol>
+<li>旋转矩阵把全局速度换算到局部坐标系：</li>
+</ol>
+<div class="arithmatex">\[
+\begin{aligned}
+Vx_{local} &amp;= Vx_{global}\cosθ + Vy_{global}\sinθ = 1*0.707 + 1*0.707 ≈ 1.414 \\
+Vy_{local} &amp;= -Vx_{global}\sinθ + Vy_{global}\cosθ = -1*0.707 + 1*0.707 ≈ 0
+\end{aligned}
+\]</div>
+<ul>
+<li>结果：在小车自己的坐标系里，它只需要沿前方跑 1.414 米/秒，不需要横向移动</li>
+<li>
+<p>旋转矩阵“帮你把全局想走的方向转换成车能直接理解的方向”。</p>
+</li>
+<li>
+<p>然后加上 <strong>角速度 ω</strong>，再通过麦克纳姆轮逆解公式算四个轮子的转速。</p>
+</li>
+<li>
+<p>这样小车就能 <strong>同时前进和旋转</strong>，边走边转。</p>
+</li>
+</ul>
+<h3 id="_6">代码<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>运动学逆解算代码：
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">Kinematics_Mecanum_CalculateRPM</span><span class="p">(</span><span class="n">Kinematics_Struct</span><span class="w"> </span><span class="o">*</span><span class="n">Kinematics</span><span class="p">)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">linear_vel_x_mins</span><span class="p">;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">linear_vel_y_mins</span><span class="p">;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">angular_vel_z_mins</span><span class="p">;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">tangential_vel</span><span class="p">;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x_rpm</span><span class="p">;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y_rpm</span><span class="p">;</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">tan_rpm</span><span class="p">;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">angle_rad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="w">    </span><span class="n">angle_rad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HWT101_Struct</span><span class="p">.</span><span class="n">CurrentAngle</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180.0f</span><span class="p">;</span><span class="c1">//陀螺仪角度转弧度</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">vel_x</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">Linear_X</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="n">cosf</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">Linear_Y</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="n">sinf</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">);</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">vel_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">Linear_X</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="n">sinf</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">Linear_Y</span><span class="w">  </span><span class="o">*</span><span class="w"> </span><span class="n">cosf</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">);</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="c1">//convert cm/s to cm/min</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">    </span><span class="n">linear_vel_x_mins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vel_x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">60</span><span class="p">;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">    </span><span class="n">linear_vel_y_mins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vel_y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">60</span><span class="p">;</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">    </span><span class="c1">//convert rad/s to rad/min</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">    </span><span class="n">angular_vel_z_mins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">Angular_Z</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.6</span><span class="w"> </span><span class="p">;</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="n">tangential_vel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">angular_vel_z_mins</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">FR_WHEELS_DISTANCE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">LR_WHEELS_DISTANCE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">    </span><span class="n">x_rpm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linear_vel_x_mins</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">WHEEL_CIRCUMFERENCE</span><span class="p">;</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">    </span><span class="n">y_rpm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">linear_vel_y_mins</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">WHEEL_CIRCUMFERENCE</span><span class="p">;</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">    </span><span class="n">tan_rpm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tangential_vel</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">WHEEL_CIRCUMFERENCE</span><span class="p">;</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">    </span><span class="c1">//calculate for the target motor RPM and direction</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="w">    </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">M1_RPM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x_rpm</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y_rpm</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tan_rpm</span><span class="p">;</span><span class="c1">//M1电机目标转速 B</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="w">    </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">M2_RPM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x_rpm</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y_rpm</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tan_rpm</span><span class="p">;</span><span class="c1">//M2电机目标转速 C</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a><span class="w">    </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">M3_RPM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x_rpm</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y_rpm</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tan_rpm</span><span class="p">;</span><span class="c1">//M3电机目标转速 A</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="w">    </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">M4_RPM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x_rpm</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">y_rpm</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tan_rpm</span><span class="p">;</span><span class="c1">//M4电机目标转速 D</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<p>对于正解代码来说，因为张大头电机返回的就是距离值，所以直接可以通过瞬时位移来计算当前速度，而不用再去求导了：</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span>
+<span class="normal"><a href="#__codelineno-1-41">41</a></span>
+<span class="normal"><a href="#__codelineno-1-42">42</a></span>
+<span class="normal"><a href="#__codelineno-1-43">43</a></span>
+<span class="normal"><a href="#__codelineno-1-44">44</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">Kinematics_Mecanum_GetVelocities</span><span class="p">(</span><span class="n">Kinematics_Struct</span><span class="w"> </span><span class="o">*</span><span class="n">Kinematics</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">    </span><span class="c1">// 计算车体的线速度和角速度</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">angle_rad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="n">angle_rad</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">HWT101_Struct</span><span class="p">.</span><span class="n">CurrentAngle</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">M_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">180.0f</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="c1">// 基于麦克纳姆轮正解：车体坐标系下的线速度</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">vx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">X</span><span class="w"> </span><span class="o">-</span><span class="n">Measured_value</span><span class="p">.</span><span class="n">old_X</span><span class="p">;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">vy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">Y</span><span class="w"> </span><span class="o">-</span><span class="n">Measured_value</span><span class="p">.</span><span class="n">old_Y</span><span class="p">;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">    </span><span class="n">Measured_value</span><span class="p">.</span><span class="n">old_X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">X</span><span class="p">;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">    </span><span class="n">Measured_value</span><span class="p">.</span><span class="n">old_Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">Y</span><span class="p">;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">    </span><span class="c1">// 变换为全局坐标速度</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">    </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">average_rps_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cosf</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sinf</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">);</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">    </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">average_rps_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sinf</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">vy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cosf</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">);</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">    </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">average_rps_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="o">-</span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">M1_RPM</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">M2_RPM</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">M3_RPM</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">M4_RPM</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">60</span><span class="o">*</span><span class="w"> </span><span class="n">WHEEL_CIRCUMFERENCE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">FR_WHEELS_DISTANCE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">LR_WHEELS_DISTANCE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="p">}</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="c1">// 函数：计算小车位置</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="n">CarPosition_Struct</span><span class="w"> </span><span class="nf">calculateCarPosition</span><span class="p">(</span><span class="n">Kinematics_Struct</span><span class="w"> </span><span class="o">*</span><span class="n">Kinematics</span><span class="p">)</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="p">{</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">    </span><span class="n">CarPosition_Struct</span><span class="w"> </span><span class="n">Measured_Position</span><span class="p">;</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">    </span><span class="n">Measured_Position</span><span class="p">.</span><span class="n">Valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SUCCESSRECEIVE</span><span class="p">;</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">    </span><span class="n">Measured_Position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">    </span><span class="n">Measured_Position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">    </span><span class="c1">// 假设小车的初始位置为(0, 0)</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="w">    </span><span class="n">Measured_value</span><span class="p">.</span><span class="n">X</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">average_rps_x</span><span class="p">;</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="w">    </span><span class="n">Measured_value</span><span class="p">.</span><span class="n">Y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">Kinematics</span><span class="o">-&gt;</span><span class="n">average_rps_y</span><span class="p">;</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Normalize_Angle</span><span class="p">(</span><span class="n">HWT101_Struct</span><span class="p">.</span><span class="n">CurrentAngle</span><span class="p">);</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">180</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-180</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="w">        </span><span class="n">Measured_Position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Measured_value</span><span class="p">.</span><span class="n">X</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.98</span><span class="p">;</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a><span class="w">        </span><span class="n">Measured_Position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Measured_value</span><span class="p">.</span><span class="n">Y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.965</span><span class="p">;</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">90</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">angle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-90</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a><span class="w">        </span><span class="n">Measured_Position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Measured_value</span><span class="p">.</span><span class="n">X</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.965</span><span class="p">;</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a><span class="w">        </span><span class="n">Measured_Position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Measured_value</span><span class="p">.</span><span class="n">Y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.98</span><span class="p">;</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a><span class="w">        </span><span class="n">Measured_Position</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Measured_value</span><span class="p">.</span><span class="n">X</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.98</span><span class="p">;</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a><span class="w">        </span><span class="n">Measured_Position</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Measured_value</span><span class="p">.</span><span class="n">Y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.965</span><span class="p">;</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42"></a>
+<a id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="k">return</span><span class="w"> </span><span class="n">Measured_Position</span><span class="p">;</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>因为我正解这一部分比较乱在很多地方都有引用，所以知道大概意思就好，注意电机读取的速度一定要快。</p>
+<h3 id="_7">一些未经实验的东西<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>从理论上来说，我们可以通过运动学逆解得到的四个电机速度反带到运动学正解中，计算出当前小车位置。这样我们就可以通过二维卡尔曼滤波来增强整个系统的鲁棒性。</p>
+<p>但是实际过程中，因为我们并没有做速度闭环而使用电机本身的速度闭环，所以在一开始时我们系统求出的速度和实际速度会有一个偏差，这个偏差会导致卡尔曼滤波发散。</p>
+<p>我其实找到了一些解决方法，比如下面这篇文章中提到的，但是由于时间的关系我并实装在车上，感兴趣的同学可以参考：</p>
+<ul>
+<li><a href="https://blog.csdn.net/qq_39872188/article/details/143975561">闭环梯形加减速算法</a></li>
+</ul>
+<h2 id="_8">关于位置、角度闭环<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p>位置闭环用位置式PID这个没什么好说的。</p>
+<p>角度闭环现在我使用的方式还是有一些问题的，主要原因是我直接将陀螺仪的角度进行比例缩放，用位置式 PID 将速度带入逆解公式的角速度中
+，这样会导致角速度在开始的时候是突变的，会直接按限值来运行。但是我也没找到比这个更好的方法。</p>
+<h2 id="_9">完整代码<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a download="Kinematics_Mecanum.c" href="../%E4%BB%A3%E7%A0%81/Kinematics_Mecanum.c">Kinematics_Mecanum.c</a></li>
+<li><a download="Kinematics_Mecanum.h" href="../%E4%BB%A3%E7%A0%81/Kinematics_Mecanum.h">Kinematics_Mecanum.h</a></li>
+</ul>
 <hr />
 
 
@@ -1157,6 +1566,7 @@
         data-input-position="top"
         data-theme="preferred_color_scheme"
         data-lang="zh-CN"
+        data-loading="lazy"
         crossorigin="anonymous"
         async>
 </script>
@@ -1272,6 +1682,12 @@
     
     
       <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
