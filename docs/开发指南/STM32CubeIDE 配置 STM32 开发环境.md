@@ -5,7 +5,8 @@ comments: true
 <img src = "https://img.shields.io/badge/version-1.0.0-green">  <img src = "https://img.shields.io/badge/author-Qiao-lightgrey"> <img src = "https://img.shields.io/badge/system-windows-blue">
 
 STM32CubeIDE 配置 STM32 开发环境非常简单，只需要下载安装 STM32CubeIDE 即可。但是使用时需要注册 ST 账户，因为Cube MX 需要联网下载芯片固件包，且下载软件也需要 ST 账户。
->ST 官网的网速十分的感人，建议使用网络代理工具。
+
+!!! warning "ST 官网的网速十分的感人，建议使用网络代理工具。"
 
 - [STM32CubeIDE 下载链接](https://www.st.com.cn/zh/development-tools/stm32cubeide.html)
 

@@ -3,7 +3,8 @@ title: 首页
 comments: true
 ---
 
-__*目前本技术库目前仅包含我所负责的电控部分*__。
+!!! info "本技术库目前仅包含我所负责的电控部分"
+
 
 我们这届的作品并不算完善，因为无论是电控还是机械结构设计，几乎都是从零起步。
 
@@ -13,12 +14,15 @@ __*目前本技术库目前仅包含我所负责的电控部分*__。
 
 **视觉方面**：YOLOv5Lite 在物体识别上较为准确，但在找中心点时稳定性不足。虽然我将滤波改为卡尔曼滤波，效果有所提升，但整体反馈误差比较抽象，后续需要进一步改进算法。
 
- 做项目不是凭空想象、闭门造车就能做好的，所以多去了解别人的设计思路和经验，吸取别人的优点。不要固步自封，一定要勇于尝试和创新。
+___做项目不是凭空想象、闭门造车就能做好的，所以多去了解别人的设计思路和经验，吸取别人的优点。不要固步自封，一定要勇于尝试和创新。___
 
->建议参考 up 主 [空城少年_Space](https://space.bilibili.com/351768796) 的 [硬件与电控](https://blog.csdn.net/m0_74056439/article/details/150104661)、[机械设计](https://blog.csdn.net/louisaerdusai/article/details/150106890) 和 [视觉方案](https://blog.csdn.net/2303_80277100/article/details/150211965) 。
+!!! quote "建议参考 up 主 [空城少年_Space](https://space.bilibili.com/351768796) 的 [硬件与电控](https://blog.csdn.net/m0_74056439/article/details/150104661)、[机械设计](https://blog.csdn.net/louisaerdusai/article/details/150106890) 和 [视觉方案](https://blog.csdn.net/2303_80277100/article/details/150211965) 。"
 
-## 注意
 
-本技术库的代码和文档均在 [GitHub](https://github.com) 上托管，因 GitHub 服务器位于国外，如果加载速度较慢，请尝试使用例如 [Clash Verge](https://github.com/clash-verge-rev/clash-verge-rev) 等网络代理工具。
 
+!!! warning "注意"
+
+    本技术库的代码和文档均在 [GitHub](https://github.com) 上托管，因 GitHub 服务器位于国外，如果加载速度较慢，请尝试使用例如 [Clash Verge](https://github.com/clash-verge-rev/clash-verge-rev) 等网络代理工具。
+
+    由于我个人精力有限，**文档和代码可能存在错误或不完善之处**。若发现问题，欢迎提交 [issues](https://github.com/qiaolook/Wiki/issues)或评论区留言。
 ---

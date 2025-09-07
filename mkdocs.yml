@@ -7,6 +7,8 @@ repo_name: Qiaolook/Wiki
 
 theme:
 
+  name: material
+
   favicon: assets/logo.png
   icon:
     logo: logo
@@ -23,7 +25,6 @@ theme:
       - navigation.tabs.sticky  # Tab栏吸顶
       - navigation.sections # 侧边栏分组
       - navigation.top # 返回顶部按钮
-      - navigation.path
       # - navigation.footer # 页脚显示在侧边栏
       - search.suggest # 搜索建议
       - search.highlight # 搜索高亮
@@ -60,7 +61,6 @@ theme:
         icon: material/lightbulb-outline
         name: 切换自动模式
 
-  name: material
   language: zh
 
 extra:
@@ -73,6 +73,8 @@ extra:
     provider: google
     property: G-R9TTTKFGQC
 
+extra_css:
+  - extra.css
 
 markdown_extensions:
   - abbr

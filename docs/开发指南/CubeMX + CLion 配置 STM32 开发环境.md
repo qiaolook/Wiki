@@ -25,15 +25,19 @@ graph TD
 
 交叉编译链 gcc-arm-none-eabi 的作用，是将文件编译成 arm 架构下的文件格式，如 `elf, axf, bin`，从而供主控板使用。
 
->`gcc-arm-none-eabi`可以从 ARM 官网上安装，也可以使用 ST 公司提供的 STM32CubeCLT 安装后捆绑 `gcc-arm-none-eabi`，或者如果安装过 STM32CubeIDE 的话，在安装目录下也会捆绑 `gcc-arm-none-eabi`。
+!!! question "gcc-arm-none-eabi"
 
-编译工具包 MinGW 提供了 gcc、cmake 等工具，其安装是 ==可选项== ，因为 CLion 捆绑了 MinGW-w64 版本。
+    `gcc-arm-none-eabi`可以从 ARM 官网上安装，也可以使用 ST 公司提供的 STM32CubeCLT 安装后捆绑 `gcc-arm-none-eabi`，或者如果安装过 STM32CubeIDE 的话，在安装目录下也会捆绑 `gcc-arm-none-eabi`。
+
+编译工具包 MinGW 提供了 gcc、cmake 等工具，其安装是 ___可选项___，因为 CLion 捆绑了 MinGW-w64 版本。
 
 OpenOCD 和 JLinkGDBServer 都属于 GDB Server。OpenOCD 支持 J-Link、ST-Link、CMSIS-DAP（无线调试器） 等多种调试器，但是配置流程稍显复杂。
 
->我使用的是 STM32CubeCLT + MinGW( CLion 捆绑 ) + OpenOCD 的调试方案。
+!!! info "我使用的是 STM32CubeCLT + MinGW( CLion 捆绑 ) + OpenOCD 的调试方案。"
 
-如果构建时速度慢，极大概率是因为杀毒软件，点名批评 Windows 的微软电脑管家，这条适用于所有 IDE
+!!! warning "注意"
+    
+    如果构建时速度慢，极大概率是因为杀毒软件，点名批评 Windows 的微软电脑管家，这条适用于所有 IDE。
 
 ----
 ## 软件下载
@@ -58,7 +62,9 @@ OpenOCD 和 JLinkGDBServer 都属于 GDB Server。OpenOCD 支持 J-Link、ST-Lin
 
 ### Arm GNU Toolchain 
 
->STM32CubeCLT 与 Arm GNU Toolchain 选择其一安装即可，软件名字 ~~gcc-arm-none-eabi~~ 已被弃用，现在的名字为 Arm GNU Toolchain，安装后还是`gcc-arm-none-eabi`
+!!! warning "注意"
+
+    STM32CubeCLT 与 Arm GNU Toolchain 选择其一安装即可，软件名字 ~~gcc-arm-none-eabi~~ 已被弃用，现在的名字为 Arm GNU Toolchain，安装后还是`gcc-arm-none-eabi`
 
 - [Arm GNU Toolchain 官网](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
 - 建议下载`.exe`安装包，这样安装程序会自动配置 __环境变量__，而使用压缩包需要自行配置环境变量
