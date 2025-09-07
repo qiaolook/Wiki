@@ -46,6 +46,8 @@
       
     
     
+      <link rel="stylesheet" href="../../extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1291,7 +1293,9 @@
 <h2 id="_1">写在前面<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>我的底盘控制思路为使用电机的速度模式，通过运动学正逆解算将任务的 X,Y 运动距离转化为四个轮子的转速，从而实现底盘运动。</p>
 <p>根据电机编码器返还的值来计算当前底盘位置，从而实现位置闭环控制。 根据陀螺仪的角度来计算当前底盘的角度，从而实现角度闭环控制。</p>
-<p>这样可以精细控制电机的运动状态，比如在运动过程中实现边旋转变前进。</p>
+<div class="admonition info">
+<p class="admonition-title">这样可以精细控制电机的运动状态，比如在运动过程中实现边旋转变前进。</p>
+</div>
 <iframe 
     src="//player.bilibili.com/player.html?isOutside=true&aid=114611470733256&bvid=BV1DD72z1Evy&cid=30278484419&p=1" 
     scrolling="no" 
@@ -1308,9 +1312,7 @@
 <ul>
 <li><a href="https://blog.csdn.net/oXiaoLingTong/article/details/120198677">麦克纳姆轮运动学解算</a></li>
 </ul>
-<blockquote>
-<p>但是如果想要变旋转边运动我们还需要引入旋转角度 <span class="arithmatex">\(\theta\)</span> 影响</p>
-</blockquote>
+<p><strong><em>但是如果想要变旋转边运动我们还需要引入旋转角度 <span class="arithmatex">\(\theta\)</span> 影响</em></strong></p>
 <h3 id="_3">运动学正逆解的本质<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p>先回顾一下：</p>
 <ul>
@@ -1323,25 +1325,17 @@
 </ul>
 <p>在这里，小车既能 <strong>前后移动</strong>，又能 <strong>左右移动</strong>，还可能 <strong>原地旋转</strong>。
 所以我们有两套坐标系：</p>
-<ol>
-<li>
 <p><strong>车体坐标系（局部坐标系）</strong></p>
-</li>
-<li>
-<p>原点在车中心。</p>
-</li>
+<ul>
+<li>原点在车中心。</li>
 <li>x 轴指前方，y 轴指左方。</li>
-<li>
-<p>小车内部的控制、速度、轮子运动都在这个坐标系里计算。</p>
-</li>
-<li>
+<li>小车内部的控制、速度、轮子运动都在这个坐标系里计算。</li>
+</ul>
 <p><strong>全局坐标系（绝对坐标系）</strong></p>
-</li>
-<li>
-<p>地图坐标，固定不动。</p>
-</li>
+<ul>
+<li>地图坐标，固定不动。</li>
 <li>小车在地图上的实际位置和方向。</li>
-</ol>
+</ul>
 <h3 id="_4">旋转矩阵的作用<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <p>假设小车 <strong>车头朝东（x轴）</strong>，它想向前走 1 米，在局部坐标系里就是 <span class="arithmatex">\((1, 0)\)</span>。</p>
 <ul>
@@ -1349,7 +1343,9 @@
 <li>如果车头朝北（局部 x 轴指北） → “局部前进 1 米”在全局坐标里是 <span class="arithmatex">\((0, 1)\)</span>。</li>
 </ul>
 <p>也就是说：<strong>局部坐标系里的前方，在全局坐标系里不一定是同一个方向</strong>。</p>
+<div class="admonition info">
 <p><strong>旋转矩阵</strong>就是用来把 <strong>局部坐标（车体坐标系）</strong> 转换到 <strong>全局坐标系</strong> 的工具，这样我们就可以使得运动过程中的旋转不会影响到我们走直线。</p>
+</div>
 <h3 id="_5">旋转矩阵的原理<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <p>二维旋转矩阵：</p>
 <div class="arithmatex">\[
@@ -1373,9 +1369,7 @@ y_\text{local}
 <li>想在全局坐标系里 <strong>正东 + 正北方向同时移动</strong>，速度分别为 <code>Vx_global = 1, Vy_global = 1</code></li>
 </ul>
 <p><strong>逆解步骤</strong>：</p>
-<ol>
-<li>旋转矩阵把全局速度换算到局部坐标系：</li>
-</ol>
+<p>旋转矩阵把全局速度换算到局部坐标系：</p>
 <div class="arithmatex">\[
 \begin{aligned}
 Vx_{local} &amp;= Vx_{global}\cosθ + Vy_{global}\sinθ = 1*0.707 + 1*0.707 ≈ 1.414 \\
@@ -1384,16 +1378,10 @@ Vy_{local} &amp;= -Vx_{global}\sinθ + Vy_{global}\cosθ = -1*0.707 + 1*0.707 �
 \]</div>
 <ul>
 <li>结果：在小车自己的坐标系里，它只需要沿前方跑 1.414 米/秒，不需要横向移动</li>
-<li>
-<p>旋转矩阵“帮你把全局想走的方向转换成车能直接理解的方向”。</p>
-</li>
-<li>
-<p>然后加上 <strong>角速度 ω</strong>，再通过麦克纳姆轮逆解公式算四个轮子的转速。</p>
-</li>
-<li>
-<p>这样小车就能 <strong>同时前进和旋转</strong>，边走边转。</p>
-</li>
+<li>旋转矩阵“帮你把全局想走的方向转换成车能直接理解的方向”。</li>
 </ul>
+<p>然后加上 <strong>角速度 ω</strong>，再通过麦克纳姆轮逆解公式算四个轮子的转速。</p>
+<p>这样小车就能 <strong>同时前进和旋转</strong>，边走边转。</p>
 <h3 id="_6">代码<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <p>运动学逆解算代码：
 <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
@@ -1718,7 +1706,7 @@ Vy_{local} &amp;= -Vx_{global}\sinθ + Vy_{global}\cosθ = -1*0.707 + 1*0.707 �
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "navigation.prune", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.path", "search.suggest", "search.highlight", "search.share", "toc.follow", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.code.select", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "navigation.prune", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "search.share", "toc.follow", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.code.select", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>

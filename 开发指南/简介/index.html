@@ -46,6 +46,8 @@
       
     
     
+      <link rel="stylesheet" href="../../extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1240,9 +1242,9 @@
 <ul>
 <li>推荐看 keysking 的 <a href="https://www.bilibili.com/video/BV12v4y1y7uV">STM32入门教程</a></li>
 </ul>
-<blockquote>
-<p>HAL库极大的简化了学习的成本，如LED灯闪烁代码只需在 CubeMX 生成的 main.c 中写几行代码即可实现。</p>
-</blockquote>
+<div class="admonition info">
+<p class="admonition-title">HAL库极大的简化了学习的成本，如LED灯闪烁代码只需在 CubeMX 生成的 main.c 中写几行代码即可实现。</p>
+</div>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">main.c</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1266,15 +1268,16 @@
 <li><strong>Keil MDK</strong>：这是一个功能强大的商业开发环境，支持 ARM 处理器，提供丰富的调试和分析工具。</li>
 <li><strong>CLion</strong>：这是 JetBrains 提供的跨平台 C/C++ IDE，支持 STM32 开发。</li>
 <li><strong>VSCode</strong>：这是一个微软开发的 IDE，通过安装相关插件，可以支持 STM32 的开发。</li>
-<li><del><strong>PlatformIO</strong></del>：这是一个基于 IDE 的开源开发环境，支持多种嵌入式平台，包括 STM32。<blockquote>
-<p>PlatformIO 需要安装在 VSCode 或 Clion 上，配置相对复杂，不推荐使用。不过一个开发环境就能开发所有 Arm 架构的芯片，还是挺强大的，但是因为是 IDE 的一个插件，可能会有兼容性的问题。</p>
-</blockquote>
-</li>
+<li><del><strong>PlatformIO</strong></del>：这是一个基于 IDE 的开源开发环境，支持多种嵌入式平台，包括 STM32。</li>
 </ul>
+<div class="admonition info">
+<p class="admonition-title">关于 PlatformIO</p>
+<p>PlatformIO 需要安装在 VSCode 或 Clion 上，配置相对复杂，不推荐使用。不过一个开发环境就能开发所有 Arm 架构的芯片，还是挺强大的，但是因为是 IDE 的一个插件，可能会有兼容性的问题。</p>
+</div>
 <p>如果你是初学者，建议从 STM32CubeIDE 或 Keil MDK 开始，因为它们初始集成了STM32的相关工具和库，使用起来相对简单。而使用 Clion 或 VSCode 则需要自行配置编译环境和调试工具，适合有一定经验的开发者。</p>
-<blockquote>
-<p>STM32CubeIDE 没有代码补全功能</p>
-</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">STM32CubeIDE 没有代码补全功能</p>
+</div>
 <h2 id="git">Git 版本控制<a class="headerlink" href="#git" title="Permanent link">&para;</a></h2>
 <p>Git 是当前最先进、最主流的分布式开源的 <strong>版本控制</strong> 系统。核心能力就是版本控制。具体而言，是面向代码文件的版本控制，代码的任何修改历史都会被记录管理起来，意味着可以 <strong>恢复到到以前的任意时刻状态</strong>。Git 支持跨区域 <strong>多人协作编辑</strong>，是团队项目开发的必备基础，所以 Git 也就成了程序员的必备技能。</p>
 <h3 id="_2">主要特点<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
@@ -1286,11 +1289,12 @@
 </ul>
 <h3 id="git_1">Git 教程<a class="headerlink" href="#git_1" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://blog.csdn.net/mukes/article/details/115693833">Git 安装教程</a><blockquote>
-<p>Git 本身没有图形化操作界面，而使用 Clion、VSCode 都集成了 Git 的图形化操作界面。如果使用传统的 Keil、STM32CubeIDE 则只能使用命令行或者自行安装第三方的图形化操作界面。具体的教程需根据你使用的 IDE 来决定。</p>
-</blockquote>
-</li>
+<li><a href="https://blog.csdn.net/mukes/article/details/115693833">Git 安装教程</a></li>
 </ul>
+<div class="admonition info">
+<p class="admonition-title">Git 图形化操作界面</p>
+<p>Git 本身没有图形化操作界面，而使用 Clion、VSCode 都集成了 Git 的图形化操作界面。如果使用传统的 Keil、STM32CubeIDE 则只能使用命令行或者自行安装第三方的图形化操作界面。具体的教程需根据你使用的 IDE 来决定。</p>
+</div>
 <h3 id="vofa">VOFA+<a class="headerlink" href="#vofa" title="Permanent link">&para;</a></h3>
 <p>PID 调参时，使用 VOFA+ 或其他串口调试助手查看数据会比较方便。</p>
 <ul>
@@ -1439,7 +1443,7 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "navigation.prune", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.path", "search.suggest", "search.highlight", "search.share", "toc.follow", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.code.select", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "navigation.prune", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "search.share", "toc.follow", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.code.select", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
