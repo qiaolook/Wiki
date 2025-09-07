@@ -2,6 +2,8 @@
 comments: true
 ---
 
+<img src = "https://img.shields.io/badge/version-1.0.0-green">  <img src = "https://img.shields.io/badge/author-Qiao-lightgrey"> 
+
 ## 写在前面
 
 工作室电机请一定要先恢复出厂设置。如果使用串口，请检查跳线帽是否安装正确，因为有一部分是我切换为 CAN 模式的。

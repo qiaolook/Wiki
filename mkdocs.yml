@@ -8,6 +8,8 @@ repo_name: Qiaolook/Wiki
 theme:
 
   favicon: assets/logo.png
+  icon:
+    logo: logo
 
   features:
       - announce.dismiss # 可关闭公告栏
@@ -21,6 +23,7 @@ theme:
       - navigation.tabs.sticky  # Tab栏吸顶
       - navigation.sections # 侧边栏分组
       - navigation.top # 返回顶部按钮
+      - navigation.path
       # - navigation.footer # 页脚显示在侧边栏
       - search.suggest # 搜索建议
       - search.highlight # 搜索高亮
@@ -69,6 +72,7 @@ extra:
   analytics:
     provider: google
     property: G-R9TTTKFGQC
+
 
 markdown_extensions:
   - abbr
