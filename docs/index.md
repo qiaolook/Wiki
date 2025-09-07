@@ -5,7 +5,6 @@ comments: true
 
 !!! info "本技术库目前仅包含我所负责的电控部分"
 
-
 我们这届的作品并不算完善，因为无论是电控还是机械结构设计，几乎都是从零起步。
 
 **机械方面**：需要朝着更易维修、结构更合理的方向改进，并提升制造精度——因为机械结构的上限直接决定了最终能调出的精度。
@@ -24,5 +23,6 @@ ___做项目不是凭空想象、闭门造车就能做好的，所以多去了�
 
     本技术库的代码和文档均在 [GitHub](https://github.com) 上托管，因 GitHub 服务器位于国外，如果加载速度较慢，请尝试使用例如 [Clash Verge](https://github.com/clash-verge-rev/clash-verge-rev) 等网络代理工具。
 
-    由于我个人精力有限，**文档和代码可能存在错误或不完善之处**。若发现问题，欢迎提交 [issues](https://github.com/qiaolook/Wiki/issues)或评论区留言。
+    由于我个人精力有限，**文档和代码可能存在错误或不完善之处**。若发现问题，欢迎提交 [issues](https://github.com/qiaolook/Wiki/issues) 或评论区留言。
+
 ---
